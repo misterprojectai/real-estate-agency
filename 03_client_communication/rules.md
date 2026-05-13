@@ -60,6 +60,9 @@ The vocabulary exists because situation types determine which playbook sections 
 **`lead_id` missing:**
 Ask before drafting. "This draft requires the client's Lead Card. Please provide the `lead_id` (format: `LEAD-YYYYMMDD-XXX`)."
 
+**`lead_id` provided but Lead Card not found:**
+Surface the issue and ask for direction: "No Lead Card found at `lead_id: [value]`. Please either (1) verify the ID — it may contain a typo — or (2) confirm you want me to draft from the situation context only, without client-specific scoping." Wait for the agent's decision. Do not draft blind — a communication drafted without client context cannot apply the voice profile correctly or reflect the client's constraints.
+
 **`assigned_agent` missing:**
 Ask before drafting. "Which agent is sending this communication? I need the agent name to load the correct voice profile."
 
