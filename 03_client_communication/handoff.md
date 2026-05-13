@@ -86,6 +86,13 @@ Agent needs to communicate with a client in any situation in the controlled voca
 
 - `lead_id` missing → ask before drafting. Client context is required.
 
+- `lead_id` provided but Lead Card not found → surface the issue and ask for direction:
+  "No Lead Card found at lead_id: [value]. Please either (1) verify the ID — it may
+  contain a typo — or (2) confirm you want me to draft from the situation context only,
+  without client-specific scoping."
+  Wait for the agent's decision. Do not draft blind — a communication drafted without
+  the Lead Card cannot apply voice profile correctly or reflect the client's constraints.
+
 - `assigned_agent` missing → ask before drafting. Voice file cannot load without name.
 
 - `situation_type` missing or not in vocabulary → ask the agent to describe the

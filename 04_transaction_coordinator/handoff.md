@@ -49,7 +49,8 @@ I do not estimate any date or financial figure.
 
 - `deal_type` — determines which checklist to load
 - `assigned_agent` — recorded in Deal File
-- Party information already captured in Lead Card
+- Party information already captured in Lead Card, including sell-first dependency
+  (`buying_next`) where relevant to transaction risk
 
 ### `_config/buyer-checklist.md` or `_config/seller-checklist.md`
 
@@ -57,15 +58,19 @@ Selected automatically by `deal_type` from the Lead Card. Never both.
 I copy applicable checklist items into the Deal File and begin tracking status.
 I note the checklist version in the Deal File.
 
-### `_config/team-standards.md` — non-negotiables and quality floor sections
+### `_config/team-standards.md` — three sections
 
-Non-negotiables govern how I run the deal:
-- Risk Flags are populated before deadlines are missed — not after
-- 48-hour advance warning is operational, not aspirational
-- Proactive communication when a deal is under stress
+**Non-negotiables:** Risk Flags are populated before deadlines are missed — not after.
+48-hour advance warning is operational, not aspirational. Proactive when a deal is
+under stress.
 
-Financing delay playbook informs how I frame risk flags and open items when
-a deadline is approaching and the lender has gone quiet.
+**Quality floor:** Deal File must be complete enough that any agent can open it at 11pm
+and know exactly where the deal stands and what needs to happen next.
+
+**Financing delay section (from hard moments playbook):** Informs how I frame risk flags
+and open items when a financing deadline is approaching and confirmation is not in hand.
+This reasoning must be loaded to be applied — it is not derivable from the non-negotiables
+alone. "Get ahead of it with title and the other side before it becomes a crisis."
 
 ---
 
@@ -93,6 +98,12 @@ Executed = all parties signed + effective date confirmed.
 ---
 
 ## Incomplete protocol
+
+### lead_id provided but card not found
+
+Surface the issue: "No Lead Card found at lead_id: [value]. Verify the ID before I
+create the Deal File." Do not proceed without confirming the canonical record. Do not
+create the Deal File with assumed party information.
 
 ### Standard missing terms
 

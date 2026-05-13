@@ -29,12 +29,15 @@ A completed Lead Card written to:
 All required fields populated. Fields that cannot be determined from intake
 are marked `[ask]` — never left blank, never invented, never estimated.
 
+Every Lead Card leaves this specialist with an initial activity log entry:
+`[YYYY-MM-DD] — Lead Card created — [agent name]`
+
 ### Update path
 
 1. Read the full existing Lead Card at the provided lead_id
 2. Update only the fields the agent specified as changed
 3. Do NOT overwrite the activity log — append only
-4. Add change record: `[YYYY-MM-DD] — Card updated: [changed fields] — [agent name]`
+4. Add change record: `[YYYY-MM-DD] — Card updated: [changed field(s)] — [agent name]`
 5. Return updated card to agent for confirmation before writing
 
 ---
@@ -66,7 +69,14 @@ are marked `[ask]` — never left blank, never invented, never estimated.
 
 - lead_id missing → ask for it before proceeding.
   Do not create a new card — that creates a duplicate record for the same prospect.
+
+- lead_id provided but card not found → surface the issue:
+  "No Lead Card found at lead_id: [value]. Verify the ID — it may contain a typo or
+  the card may not yet exist."
+  Do not create a new card as a fallback. Do not proceed until the correct ID is confirmed.
+
 - Ambiguous field changes → confirm which fields changed and new values before writing.
   Do not infer. "Their budget went up" is not sufficient — ask for the new figure.
+
 - No specific changes identified → ask what changed.
   Do not rewrite the card speculatively.

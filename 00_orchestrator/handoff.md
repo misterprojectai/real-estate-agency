@@ -45,9 +45,12 @@ Is this a person with NO existing Lead Card?
 ### Node 2 — Re-qualification
 
 Does the agent report this lead's situation has changed significantly?
-(budget shifted, direction changed buyer→seller, timeline moved, major new constraint)
+(budget shifted, direction changed, timeline moved, major new constraint)
 
   YES → 01_lead_qualifier [update existing card — pass lead_id]
+        This is the counterintuitive path: existing lead routes back to Lead Qualifier,
+        not forward in the pipeline. Stale data in the Lead Card corrupts every
+        downstream specialist that reads it.
 
 ### Node 3 — Property or market analysis
 
@@ -95,11 +98,11 @@ A routing decision plus a context package containing:
 |-------|---------|-------|
 | Request restated | Always | One sentence — what the agent actually needs |
 | Target specialist | Always | Named + reason stated |
-| lead_id | If applicable | Required for 02, 03, 04 |
+| lead_id | If applicable | Required for 02, 03, 04 — comes from agent's request only |
 | deal_id | If applicable | Required for 04 on active deals |
 | research_id | If applicable | Passed to 03 when communication follows a showing |
 | assigned_agent | Always for 03 | Determines which voice file loads |
-| situation_type | Always for 03 | Must match controlled vocabulary |
+| situation_type | Always for 03 | Must match controlled vocabulary — derived from request |
 | Conflict flag | If Node 0 fired | States what was flagged and which non-negotiable |
 
 ---
@@ -112,6 +115,24 @@ Every request. No exceptions.
 
 ## Incomplete protocol
 
-- Request insufficient to route with confidence → ask one clarifying question. Wait. Route.
-- Request conflicts with team non-negotiable → surface conflict, one sentence, route anyway. Agent decides.
-- No specialist fits after all nodes → ask one clarifying question, not a list of options.
+**Request insufficient to route with confidence:**
+Ask one clarifying question targeted at the specific ambiguity. Wait. Route.
+
+**Request conflicts with team non-negotiable:**
+Surface conflict in one sentence. Route anyway. Flag in context package. Do not block.
+
+**Situation type unclear when routing to 03_client_communication:**
+Node 4 identifies the specialist, but the context package requires a confirmed situation_type.
+Ask: "Can you describe what this communication needs to accomplish in one sentence?"
+Map the answer to the closest vocabulary entry. Confirm before routing.
+Do not route to 03_client_communication without a confirmed situation_type.
+
+**Required artifact ID not provided:**
+Artifact IDs (lead_id, deal_id, research_id) come from the agent's request only.
+If the request requires one and the agent did not provide it, ask for it before routing.
+Do not infer, estimate, or construct IDs. Do not route with an incomplete context package.
+
+**No specialist fits after all nodes:**
+Node 7 applies. Ask one clarifying question. If routing is still not possible after
+the answer: "This request falls outside the current specialist scope.
+[One sentence on what is missing or unclear.]"
