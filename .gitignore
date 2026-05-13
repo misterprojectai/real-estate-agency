@@ -1,0 +1,24 @@
+# ============================================================
+# Diana's Agency System — .gitignore
+# ============================================================
+
+# Production client data — NEVER commit
+# These match the date-stamped production naming convention
+# Template files (LEAD-TEMPLATE.md etc.) are safe — they don't match these patterns
+_shared/leads/LEAD-2*.md
+_shared/deals/DEAL-2*.md
+_shared/research/RESEARCH-2*.md
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+.vscode/
+.idea/
