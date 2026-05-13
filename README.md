@@ -14,7 +14,7 @@ This system externalizes Diana. Every folder holds a piece of what Diana knows, 
 
 If you have completed team setup (Section 3 below), here is how you use the system:
 
-1. Open Claude Code in the `agency-system/` folder
+1. Open Claude Code at the root of this folder (wherever you cloned or copied the repository)
 2. Describe your request in plain language: "I have a new buyer referral" or "Need to prep for a showing on a Mueller property" or "Client asking about the inspection finding"
 3. The orchestrator routes to the right specialist and produces the output
 
@@ -87,7 +87,7 @@ Open `_config/team-standards.md`. The file has placeholder notes from Diana's br
 | Quality floor | Response time commitments, 48-hour deadline rule | Governs every specialist's standard |
 | Non-negotiables | What this team always does / never does | Orchestrator checks these before every routing decision |
 | Client philosophy | Why the team is small, what advocacy means | Shapes every client communication draft |
-| Hard moments playbook | Competing offers, inspection issues, financing delays, client hesitation, deal falling apart | Direct reference for the three hardest communication types |
+| Hard moments playbook | Competing offers, inspection issues, financing delays, client hesitation, deal falling apart | Direct reference for competing-offer, inspection-response, and financing-delay communications; financing delay section also used by TC for risk flag framing |
 | Version header | `last_updated` date + version number | Tracks when Diana's thinking evolves |
 
 **How to update it over time:** When Diana's philosophy evolves — after a hard deal, when a new agent joins, when the team learns something — open the file, update the relevant section, increment the version number, update `last_updated`. The system reads the current version on every run.
@@ -140,6 +140,8 @@ Is this a new person with no Lead Card?
 
 Did an existing lead's situation change significantly?
   YES → 01 Lead Qualifier (update existing card — pass the lead_id)
+        NOTE: This routes an existing lead BACK to Lead Qualifier — not forward to
+        wherever the lead currently sits. Stale data corrupts every downstream specialist.
 
 Does the request name a specific property, address, or neighborhood for analysis?
   YES → 02 Property Research
@@ -213,6 +215,7 @@ Complete these steps in order. A new agent should be operational by end of day o
 
 **Day 1 — Morning (1–2 hours):**
 - [ ] New agent reads `_config/team-standards.md` in full — this is how Diana's team operates
+- [ ] New agent reads `01_lead_qualifier/handoff.md` and `03_client_communication/handoff.md` — these define exactly what each specialist receives, what it does when fields are missing, and what the output looks like. Read before first use, not after.
 - [ ] New agent reads all five `examples.md` files — one per specialist. Start with `00_orchestrator/examples.md`. These function as training material independent of the AI system. A new agent who reads them before her first transaction will be more prepared than one who has not, whether or not she ever opens the AI system.
 - [ ] New agent fills her voice profile (`_shared/voices/[name].md`) using real sample emails
 - [ ] Diana reviews and confirms the voice profile
@@ -221,7 +224,7 @@ Complete these steps in order. A new agent should be operational by end of day o
 - [ ] New agent's first real request: enter a lead she is working on. Lead Qualifier walks the intake.
 - [ ] New agent reviews the completed Lead Card. Does it look right?
 - [ ] If a deal is active: open the Deal File. Review the key dates and document checklist.
-- [ ] New agent reads `handoff.md` for the specialists she will use most (Lead Qualifier, Client Communication at minimum).
+- [ ] When a question comes up about a specific specialist's behavior, read that specialist's `handoff.md`.
 
 **What a new agent can do on day 1 without calling Diana:**
 - Qualify a new lead
@@ -238,7 +241,7 @@ Complete these steps in order. A new agent should be operational by end of day o
 Describe the request in plain language. The orchestrator routes it. If you want to understand the routing logic, read `00_orchestrator/handoff.md` — the full triage tree is there.
 
 **"What if I don't know the lead_id?"**
-Lead IDs follow the format `LEAD-YYYYMMDD-XXX`. Find them in `_shared/leads/` — the filename IS the lead_id. If you cannot find it, ask the orchestrator: "What is the lead_id for [client name]?" and it will tell you where to look.
+Lead IDs follow the format `LEAD-YYYYMMDD-XXX`. The filename IS the lead_id — open `_shared/leads/` and look for the client's name. Lead Cards are named `LEAD-[date]-[agent initials].md`. The orchestrator cannot search for lead_ids on your behalf; it passes IDs you provide. If you cannot locate the card, search `_shared/leads/` by date or open each file to check the `name:` field.
 
 **"My client's situation changed — do I create a new Lead Card?"**
 No. Never create a duplicate. Describe what changed to the orchestrator: "Update on [client name] — [what changed]." The orchestrator routes to Lead Qualifier to update the existing card.
