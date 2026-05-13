@@ -26,14 +26,14 @@ If you have not completed team setup, start at Section 3.
 
 ```
                     ┌─────────────────────────────────────┐
-                    │          00 Orchestrator             │
-                    │   Conflict check + routing only      │
-                    │   Reads every request first          │
+                    │          00 Orchestrator            │
+                    │   Conflict check + routing only     │
+                    │   Reads every request first         │
                     └──────────────┬──────────────────────┘
                                    │ routes to one specialist
-          ┌────────────────────────┼────────────────────────────┐
-          │                        │                            │
-  ┌───────▼──────┐     ┌───────────▼──────┐    ┌───────────────▼────────┐   ┌──────────────────────┐
+          ┌────────────────────────┼───────────────────────────┐
+          │                        │                           │
+  ┌───────▼──────┐    ┌───────────▼──────┐    ┌───────────────▼────────┐   ┌──────────────────────┐
   │  01 Lead     │     │  02 Property     │    │  03 Client             │   │  04 Transaction      │
   │  Qualifier   │     │  Research        │    │  Communication         │   │  Coordinator         │
   │              │     │                  │    │                        │   │                      │
@@ -43,18 +43,18 @@ If you have not completed team setup, start at Section 3.
   └───────┬──────┘     └───────────┬──────┘    │ team standards         │   └──────────┬───────────┘
           │                        │           └───────────────┬────────┘              │
           └────────────────────────┼───────────────────────────┘                       │
-                                   │ reads from / writes to                             │
+                                   │ reads from / writes to                            │
                     ┌──────────────▼───────────────────────────────────────────────────┘
-                    │                      _shared/                                     │
-                    │  leads/       → Lead Cards (one per prospect)                     │
-                    │  research/    → Research Briefs (one per property/analysis)       │
-                    │  deals/       → Deal Files (one per active transaction)           │
-                    │  voices/      → Agent voice profiles (one per agent)              │
+                    │                      _shared/                                    │
+                    │  leads/       → Lead Cards (one per prospect)                    │
+                    │  research/    → Research Briefs (one per property/analysis)      │
+                    │  deals/       → Deal Files (one per active transaction)          │
+                    │  voices/      → Agent voice profiles (one per agent)             │
                     └──────────────────────────────────────────────────────────────────┘
                     ┌──────────────────────────────────────────────────────────────────┐
-                    │                      _config/                                     │
+                    │                      _config/                                    │
                     │  team-standards.md       ← loaded by ALL specialists, every run  │
-                    │  buyer-checklist.md  ┐                                            │
+                    │  buyer-checklist.md  ┐                                           │
                     │  seller-checklist.md ┘  ← loaded by TC only, per deal type       │
                     └──────────────────────────────────────────────────────────────────┘
 ```
